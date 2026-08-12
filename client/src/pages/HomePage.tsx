@@ -9,7 +9,6 @@ import {
     deleteAllTodos,
 } from "../api/todo.api";
 import { useAuth } from "../context/AuthContext";
-import "./HomePage.css";
 
 interface Todo {
     _id: string;
