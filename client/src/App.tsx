@@ -1,24 +1,59 @@
-import { useEffect, useState } from "react";
-import { getHealth } from "./services/api";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+
+import AuthPage from "./pages/AuthPages";
+import HomePage from "./pages/HomePage";
+import { useAuth } from "./context/AuthContext";
 
 function App() {
-  const [message, setMessage] = useState("");
+  const {
+    user,
+    isInitializing,
+  } = useAuth();
 
-  useEffect(() => {
-    getHealth()
-      .then((data) => {
-        setMessage(data.message);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+  if (isInitializing) {
+    return (
+      <div className="app-loading">
+        Loading TaskFlow...
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <h1>Todo App</h1>
-      <p>{message}</p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+
+        <Route
+          path="/auth"
+          element={
+            user
+              ? <Navigate to="/" replace />
+              : <AuthPage />
+          }
+        />
+
+        <Route
+          path="/"
+          element={
+            user
+              ? <HomePage />
+              : <Navigate to="/auth" replace />
+          }
+        />
+
+        <Route
+          path="*"
+          element={
+            <Navigate to="/" replace />
+          }
+        />
+
+      </Routes>
+    </BrowserRouter>
   );
 }
 
