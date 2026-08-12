@@ -7,7 +7,9 @@ if (!JWT_SECRET) {
   throw new Error("JWT_SECRET is not configured");
 }
 
-export interface AuthenticatedRequest extends Request {
+export interface AuthenticatedRequest<
+  P = Record<string, string>
+> extends Request<P> {
   user?: {
     sub: string;
     email: string;

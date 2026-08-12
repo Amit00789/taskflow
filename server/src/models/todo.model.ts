@@ -4,6 +4,9 @@ export interface ITodo extends Document {
   title: string;
   description?: string;
   completed: boolean;
+  startDate: Date;
+  expectedCompletionDate: Date;
+  completedAt: Date;
   userId: mongoose.Types.ObjectId;
 }
 
@@ -23,6 +26,21 @@ const todoSchema = new Schema<ITodo>(
     completed: {
       type: Boolean,
       default: false,
+    },
+
+    startDate: {
+      type: Date,
+      required: true,
+    },
+
+    expectedCompletionDate: {
+      type: Date,
+      required: true,
+    },
+
+    completedAt: {
+      type: Date,
+      default: null,
     },
 
     userId: {

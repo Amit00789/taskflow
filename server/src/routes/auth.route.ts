@@ -3,6 +3,8 @@ import {
     getMe,
     login,
     register,
+    refreshTokenController,
+    logOutUserController
 } from "../controller/auth.controller.js";
 import { validate } from "../middlewares/validate.middleware.js";
 import {
@@ -23,6 +25,16 @@ router.post(
     "/login",
     validate(loginSchema),
     login
+);
+
+router.post(
+    "/refresh",
+    refreshTokenController
+);
+
+router.post(
+    "/logout",
+    logOutUserController
 );
 
 router.get(
