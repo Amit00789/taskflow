@@ -1,0 +1,22 @@
+services:
+ backend:
+  build:
+    context: ./server
+    dockerfile: Dockerfile
+  environment:
+    MONGO_URI: ${MONGO_URI}
+    JWT_SECRET: ${JWT_SECRET}
+    JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+    PORT: ${PORT}
+    NODE_ENV: ${NODE_ENV}
+  ports:
+    - "5000:5000"
+
+ frontend:
+  build:
+    context: ./client
+    dockerfile: Dockerfile
+  depends_on:
+    - backend
+  ports:
+    - "8080:80"
